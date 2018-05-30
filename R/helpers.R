@@ -2,6 +2,6 @@
 
 cohortMessage <- function(year) {
   paste("Displaying data for the <strong>", year, "</strong> fall cohort.",
-        "Click 'Yes' below to explore the data further.
-        <br>")
+        "If you would like to disaggregate or conduct a comparison, select
+        'Yes' in the options below")
 }

@@ -6,3 +6,23 @@ cohortMessage <- function(year, definition) {
         "If you would like to disaggregate or conduct a comparison, select
         'Yes' in the options below.", sep = '')
 }
+
+
+cohortSelectData <- function(year, definition, demographic, data) {
+
+  cohorts <- data
+
+  # Pull selected cohort
+  temp <- cohorts %>% filter(cohortyear == year & term == 1)
+
+  # Specify filter column based on cohort selection
+  names(temp)[names(temp) == definition] <- 'filt'
+
+  plotSet <- temp %>%
+    filter(!is.na(filt)) %>%
+    group_by_(demographic) %>%
+    summarise(headcount = n()) %>%
+    mutate(percent = headcount/sum(headcount))
+
+  plotSet
+}

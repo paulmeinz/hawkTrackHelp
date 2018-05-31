@@ -22,7 +22,7 @@ cohortSelectData <- function(year, definition, demographic, data) {
     filter(!is.na(filt)) %>%
     group_by_(demographic) %>%
     summarise(headcount = n()) %>%
-    mutate(percent = headcount/sum(headcount), headcount,
+    mutate(percent = headcount/sum(headcount) * 100, headcount,
            total = sum(headcount))
 
   plotSet
@@ -34,10 +34,10 @@ makeDemoToolTip <- function(num = 'headcount', den = 'total') {
     function(key, x, y, e) {
     return '<p> <strong>' + x + '</strong> </p>' +
     '<p>' +
-    <strong>' + y + '% </strong>' +
+    '<strong>' + y + '% </strong>' +
     '</p>' +
     '<p>' +
-    e.point.headcount + 'out of' + e.point.den + 'students' +
+    e.point.headcount + ' out of ' + e.point.total + ' students' +
     '</p>'
     } !#"
   )

@@ -46,6 +46,7 @@ cohortSelectData <- function(year, definition, demographic, data) {
   plotSet
 }
 
+
 makeDemoToolTip <- function(type = 'bar') {
   if (type == 'bar') {
     paste(

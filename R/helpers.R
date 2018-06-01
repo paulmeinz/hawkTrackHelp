@@ -1,5 +1,7 @@
 #' @export
 
+
+# Create a message for cohort data that displays on the top of sidebars
 cohortMessage <- function(year, definition) {
   paste("Displaying data for the <strong>", year, "</strong> fall cohort (",
         definition, " students). ",
@@ -7,7 +9,7 @@ cohortMessage <- function(year, definition) {
         'Yes' in the options below.", sep = '')
 }
 
-
+# Function that disaggregates data for the select a cohort tab
 cohortSelectData <- function(year, definition, demographic, data) {
 
   cohorts <- data
@@ -47,6 +49,7 @@ cohortSelectData <- function(year, definition, demographic, data) {
 }
 
 
+# Creates tooltips for demographic plots in cohort tab (may be expanded)
 makeDemoToolTip <- function(type = 'bar') {
   if (type == 'bar') {
     paste(
@@ -73,4 +76,18 @@ makeDemoToolTip <- function(type = 'bar') {
       '</p>'
     } !#"
   }
+}
+
+
+createTermString <- function(term) {
+  term <- as.character(term)
+
+  lookup <- c('1' = '1st',
+              '2' = '2nd',
+              '3' = '3rd',
+              '4' = '4th',
+              '5' = '5th',
+              '6' = '6th')
+
+  term <- lookup[term]
 }

@@ -2,9 +2,9 @@
 
 
 # Create a message for cohort data that displays on the top of sidebars
-cohortMessage <- function(year, definition) {
-  paste("Displaying data for the <strong>", year, "</strong> fall cohort (",
-        definition, " students). ",
+cohortMessage <- function(year, definition, term) {
+  paste("Displaying data for the <strong>", year, "</strong> cohort (",
+        definition, " students) in their ", term, " term. ",
         "If you would like to disaggregate or conduct a comparison, select
         'Yes' in the options below.", sep = '')
 }

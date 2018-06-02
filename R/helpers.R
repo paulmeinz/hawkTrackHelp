@@ -92,3 +92,32 @@ createTermString <- function(term) {
 
   term <- lookup[term]
 }
+
+
+outcomeDisag <- function(outcome, comparison, demo = 'None', data, type = '%') {
+  temp <- data
+
+  names(temp)[names(temp) == outcome] <- 'outcome'
+
+  if (comparison == 'years') {names(temp)[names(temp) == 'term'] <- 'order'}
+  if (comparison == 'cohorts') {
+    names(temp)[names(temp) == 'cohortyear'] <- 'order'
+  }
+
+  if (demo == 'None') {
+    temp <- temp %>%
+      group_by(order) %>%
+      summarise(outcome = mean(outcome)) %>%
+      mutate(outcome = outcome * ifelse(type == '%', 100, 1))
+  }
+
+  if (demo != 'None') {
+    names(temp)[names(temp) == demo] <- 'demo'
+    temp <- temp %>%
+      group_by(order, demo) %>%
+      summarise(outcome = mean(outcome)) %>%
+      mutate(outcome = outcome * ifelse(type == '%', 100, 1))
+  }
+
+  temp
+}

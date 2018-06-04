@@ -80,6 +80,7 @@ makeDemoToolTip <- function(type = 'bar') {
 }
 
 
+# Creates a term name string
 createTermString <- function(term) {
   term <- as.character(term)
 
@@ -122,7 +123,7 @@ outcomeDisag <- function(outcome,
     temp <- temp[temp$term == term,]
     comps <- unique(temp$cohortyear)[order(unique(temp$cohortyear))]
     cur <- match(cohort,comps)
-    bot <- cur - 4
+    bot <- ifelse(cur - 4 > 0, cur - 4, 1)
     comps <- comps[bot:cur]
     temp <- temp[temp$cohortyear %in% comps,]
     names(temp)[names(temp) == 'cohortyear'] <- 'order'

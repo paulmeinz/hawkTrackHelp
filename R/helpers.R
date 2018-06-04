@@ -98,12 +98,20 @@ createTermString <- function(term) {
 outcomeDisag <- function(outcome,
                          comparison,
                          cohort,
+                         definition,
                          term,
                          equity = 'No',
                          demo = 'None', data, type = '%') {
   temp <- data
+  names(temp)[names(temp) == definition] <- 'filt'
+  temp <- temp[!is.na(temp$filt),]
 
   names(temp)[names(temp) == outcome] <- 'out'
+
+  if(outcome == 'None') {
+    temp <- data.frame(outcome = 0, order = 0)
+    return(temp)
+    }
 
   if (comparison == 'years') {
     temp <- temp[temp$cohortyear == cohort,]
@@ -151,7 +159,7 @@ outcomeDisag <- function(outcome,
       left_join(comp) %>%
       mutate(outcome = outcome/outcome2, headcount = headcount/headcount2,
              total = total/total2) %>%
-      select(c('order', 'outcome', 'headcount', 'total'))
+      select(c('order', 'demo', 'outcome', 'headcount', 'total'))
   }
 
   final

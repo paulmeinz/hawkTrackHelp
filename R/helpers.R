@@ -94,30 +94,65 @@ createTermString <- function(term) {
 }
 
 
-outcomeDisag <- function(outcome, comparison, demo = 'None', data, type = '%') {
+# Funciton that disaggregates data for the comparison plots
+outcomeDisag <- function(outcome,
+                         comparison,
+                         cohort,
+                         term,
+                         equity = 'No',
+                         demo = 'None', data, type = '%') {
   temp <- data
 
-  names(temp)[names(temp) == outcome] <- 'outcome'
+  names(temp)[names(temp) == outcome] <- 'out'
 
-  if (comparison == 'years') {names(temp)[names(temp) == 'term'] <- 'order'}
+  if (comparison == 'years') {
+    temp <- temp[temp$cohortyear == cohort,]
+    names(temp)[names(temp) == 'term'] <- 'order'
+  }
+
   if (comparison == 'cohorts') {
+    temp <- temp[temp$term == term,]
+    comps <- unique(temp$cohortyear)[order(unique(temp$cohortyear))]
+    cur <- match(cohort,comps)
+    bot <- cur - 4
+    comps <- comps[bot:cur]
+    temp <- temp[temp$cohortyear %in% comps,]
     names(temp)[names(temp) == 'cohortyear'] <- 'order'
   }
 
   if (demo == 'None') {
-    temp <- temp %>%
+    final <- temp %>%
       group_by(order) %>%
-      summarise(outcome = mean(outcome)) %>%
+      summarise(outcome = mean(out),
+                headcount = sum(out),
+                total = n()) %>%
       mutate(outcome = outcome * ifelse(type == '%', 100, 1))
   }
 
   if (demo != 'None') {
     names(temp)[names(temp) == demo] <- 'demo'
-    temp <- temp %>%
+    final <- temp %>%
       group_by(order, demo) %>%
-      summarise(outcome = mean(outcome)) %>%
+      summarise(outcome = mean(out),
+                headcount = sum(out),
+                total = n()) %>%
       mutate(outcome = outcome * ifelse(type == '%', 100, 1))
   }
 
-  temp
+  if (equity == 'Yes') {
+    comp <- temp %>%
+      group_by(order) %>%
+      summarise(outcome2 = mean(out),
+                headcount2 = sum(out),
+                total2 = n()) %>%
+      mutate(outcome2 = outcome2 * ifelse(type == '%', 100, 1))
+
+    final <- final %>%
+      left_join(comp) %>%
+      mutate(outcome = outcome/outcome2, headcount = headcount/headcount2,
+             total = total/total2) %>%
+      select(c('order', 'outcome', 'headcount', 'total'))
+  }
+
+  final
 }

@@ -53,30 +53,88 @@ cohortSelectData <- function(year, definition, demographic, data) {
 # Creates tooltips for demographic plots in cohort tab (may be expanded)
 makeDemoToolTip <- function(type = 'bar') {
   if (type == 'bar') {
-    paste(
-      "#!
-      function(key, x, y, e) {
-      return '<p> <strong>' + x + '</strong> </p>' +
-      '<p>' +
-      '<strong>' + y + '% </strong>' +
-      '</p>' +
-      '<p>' +
-      e.point.headcount + ' out of ' + e.point.total + ' students' +
-      '</p>'
-      } !#"
-    )
-  } else {
-      "#!
-      function(key, y, e, graph) {
-      return '<p> <strong>' + key + '</strong> </p>' +
-      '<p>' +
-      '<strong>' + y + '% </strong>' +
-      '</p>' +
-      '<p>' +
-      e.point.headcount + ' out of ' + e.point.total + ' students' +
-      '</p>'
+    text <- "#!
+    function(key, x, y, e) {
+    return '<p> <strong>' + x + '</strong> </p>' +
+    '<p>' +
+    '<strong>' + y + '% </strong>' +
+    '</p>' +
+    '<p>' +
+    e.point.headcount + ' out of ' + e.point.total + ' students' +
+    '</p>'
     } !#"
   }
+
+  if (type == 'baravg') {
+    text <- "#!
+    function(key, x, y, e) {
+    return '<p> <strong>' + x + '</strong> </p>' +
+    '<p>' +
+    '<strong>' + y + '</strong>' +
+    '</p>' +
+    '<p>' +
+    e.point.headcount + ' total units for ' + e.point.total + ' students' +
+    '</p>'
+    } !#"
+  }
+
+  if (type == 'pie') {
+    text <- "#!
+    function(key, y, e, graph) {
+    return '<p> <strong>' + key + '</strong> </p>' +
+    '<p>' +
+    '<strong>' + y + '% </strong>' +
+    '</p>' +
+    '<p>' +
+    e.point.headcount + ' out of ' + e.point.total + ' students' +
+    '</p>'
+    } !#"
+  }
+
+  if (type == 'demo') {
+    text <- "#!
+    function(key, x, y, e) {
+    return '<p> <strong>' + key + '</strong> </p>' +
+    '<p>' + x + ': <strong>' + y + '% </strong> </p>' +
+    '<p>' +
+    e.point.headcount + ' out of </br>' +
+    e.point.total + ' students'
+    '</p>'
+    } !#"
+  }
+
+  if (type == 'demoavg') {
+    text <- "#!
+    function(key, x, y, e) {
+    return '<p> <strong>' + key + '</strong> </p>' +
+    '<p>' + x + ': <strong>' + y + '</strong> </p>' +
+    '<p>' +
+    e.point.headcount + ' total units for </br>' +
+    e.point.total + ' students'
+    '</p>'
+    } !#"
+  }
+
+  if (type == 'equity') {
+    text <- "#!
+    function(key, x, y, e) {
+    return '<p>' + '<strong>' + key + '</strong>' + '</p>' +
+    '<p>' +
+    x + ': ' + '<strong>' + y  + '</strong>' +
+    '</p>' +
+    '<p>' +
+    'This group constituted ' + e.point.headcount + '%' +
+    '<br/>' +
+    'of the outcome' +
+    '<br/>' +
+    'and ' + e.point.total + '% of all students'
+    '<br/>' +
+    'in the cohort.'
+    '</p>'
+    } !#"
+  }
+
+  text
 }
 
 
@@ -158,8 +216,9 @@ outcomeDisag <- function(outcome,
 
     final <- final %>%
       left_join(comp) %>%
-      mutate(outcome = outcome/outcome2, headcount = headcount/headcount2,
-             total = total/total2) %>%
+      mutate(outcome = round(outcome/outcome2 * 100, 1),
+             headcount = round(headcount/headcount2 * 100, 1),
+             total = round(total/total2 * 100, 1)) %>%
       select(c('order', 'demo', 'outcome', 'headcount', 'total'))
   }
 

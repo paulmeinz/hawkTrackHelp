@@ -5,9 +5,8 @@
 cohortMessage <- function(year, definition, term) {
   paste("Displaying data for the <strong>", year, "</strong> cohort (",
         definition, " students). ",
-        "If you would like to disaggregate, conduct a comparison, or
-         look at other variables not depicted here, select
-        'Yes' in the option below.", sep = '')
+        "Select 'Yes' to compare, disaggregate or look at other variables
+        ", sep = '')
 }
 
 # Function that disaggregates data for the select a cohort tab

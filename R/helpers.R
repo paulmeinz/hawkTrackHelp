@@ -174,7 +174,14 @@ outcomeDisag <- function(outcome,
 
   if (comparison == 'years') {
     temp <- temp[temp$cohortyear == cohort,]
-    names(temp)[names(temp) == 'term'] <- 'order'
+
+    # Create an ordered strm descr factor
+    new <- unique(temp[,c('term', 'termdescr')])
+    new <- new$termdescr[order(new$term)]
+    temp$termdescr <- factor(temp$termdescr, levels = new, ordered = TRUE)
+
+
+    names(temp)[names(temp) == 'termdescr'] <- 'order'
   }
 
   if (comparison == 'cohorts') {

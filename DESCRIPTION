@@ -1,11 +1,11 @@
 Package: hawkTrackHelp
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Helper Functions for the HawkTrack Dash
+Version: 1.0.0
+Author: Paul Meinz
+Maintainer: meinzp@crc.losrios.edu <meinzp@crc.losrios.edu>
+Description: A set up help functions for the HawkTrack dashboard. This package
+    will definitely not be useful for general use.
+License: MIT
 Encoding: UTF-8
 LazyData: true

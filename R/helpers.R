@@ -1,7 +1,12 @@
 #' @export
 
+################################################################################
 
 # Create a message for cohort data that displays on the top of sidebars
+
+################################################################################
+
+
 cohortMessage <- function(year, definition, term) {
   paste("Displaying data for the <strong>", year, "</strong> cohort (",
         definition, " students). ",
@@ -9,7 +14,14 @@ cohortMessage <- function(year, definition, term) {
         ", sep = '')
 }
 
+
+################################################################################
+
 # Function that disaggregates data for the select a cohort tab
+
+################################################################################
+
+
 cohortSelectData <- function(year, definition, demographic, data) {
 
   cohorts <- data
@@ -49,7 +61,13 @@ cohortSelectData <- function(year, definition, demographic, data) {
 }
 
 
+################################################################################
+
 # Creates tooltips for demographic plots in cohort tab (may be expanded)
+
+################################################################################
+
+
 makeDemoToolTip <- function(type = 'bar') {
   if (type == 'bar') {
     text <- "#!
@@ -137,7 +155,13 @@ makeDemoToolTip <- function(type = 'bar') {
 }
 
 
+################################################################################
+
 # Creates a term name string
+
+################################################################################
+
+
 createTermString <- function(term) {
   term <- as.character(term)
 
@@ -152,7 +176,13 @@ createTermString <- function(term) {
 }
 
 
+################################################################################
+
 # Funciton that disaggregates data for the comparison plots
+
+################################################################################
+
+
 outcomeDisag <- function(outcome,
                          comparison,
                          cohort,

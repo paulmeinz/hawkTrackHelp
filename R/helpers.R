@@ -87,10 +87,7 @@ makeDemoToolTip <- function(type = 'bar') {
     function(key, x, y, e) {
     return '<p> <strong>' + x + '</strong> </p>' +
     '<p>' +
-    '<strong>' + y + '</strong>' +
-    '</p>' +
-    '<p>' +
-    e.point.headcount + ' total units for ' + e.point.total + ' students' +
+    'Average: ' + '<strong>' + y + '</strong>' +
     '</p>'
     } !#"
   }
@@ -124,11 +121,7 @@ makeDemoToolTip <- function(type = 'bar') {
     text <- "#!
     function(key, x, y, e) {
     return '<p> <strong>' + key + '</strong> </p>' +
-    '<p>' + x + ': <strong>' + y + '</strong> </p>' +
-    '<p>' +
-    e.point.headcount + ' total units for </br>' +
-    e.point.total + ' students'
-    '</p>'
+    '<p>' + x + ': <strong>' + y + '</strong> </p>'
     } !#"
   }
 

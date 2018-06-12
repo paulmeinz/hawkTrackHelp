@@ -219,8 +219,8 @@ outcomeDisag <- function(outcome,
   if (demo == 'None') {
     final <- temp %>%
       group_by(order) %>%
-      summarise(outcome = mean(out),
-                headcount = sum(out),
+      summarise(outcome = mean(out, na.rm = TRUE),
+                headcount = sum(out, na.rm= TRUE),
                 total = n()) %>%
       mutate(outcome = outcome * ifelse(type == '%', 100, 1))
   }
@@ -229,8 +229,8 @@ outcomeDisag <- function(outcome,
     names(temp)[names(temp) == demo] <- 'demo'
     final <- temp %>%
       group_by(order, demo) %>%
-      summarise(outcome = mean(out),
-                headcount = sum(out),
+      summarise(outcome = mean(out, na.rm = TRUE),
+                headcount = sum(out, na.rm = TRUE),
                 total = n()) %>%
       mutate(outcome = outcome * ifelse(type == '%', 100, 1))
   }
@@ -238,8 +238,8 @@ outcomeDisag <- function(outcome,
   if (equity == 'Yes') {
     comp <- temp %>%
       group_by(order) %>%
-      summarise(outcome2 = mean(out),
-                headcount2 = sum(out),
+      summarise(outcome2 = mean(out, na.rm = TRUE),
+                headcount2 = sum(out, na.rm = TRUE),
                 total2 = n()) %>%
       mutate(outcome2 = outcome2 * ifelse(type == '%', 100, 1))
 

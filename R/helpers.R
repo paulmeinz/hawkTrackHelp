@@ -188,6 +188,7 @@ outcomeDisag <- function(outcome,
   temp <- temp[!is.na(temp$filt),]
 
   names(temp)[names(temp) == outcome] <- 'out'
+  temp <- temp[!is.na(temp$out),]
 
   if(outcome == 'None') {
     temp <- data.frame(outcome = 0, order = 0)

@@ -205,13 +205,14 @@ outcomeDisag <- function(outcome,
   temp <- temp[!is.na(temp$filt),]
 
   names(temp)[names(temp) == outcome] <- 'out'
-  temp <- temp[!is.na(temp$out),]
+
 
   if(outcome == 'None') {
     temp <- data.frame(outcome = 0, order = 0)
     return(temp)
     }
 
+  temp <- temp[!is.na(temp$out),]
   if (comparison == 'years') {
     temp <- temp[temp$cohortyear == cohort,]
 
@@ -222,6 +223,7 @@ outcomeDisag <- function(outcome,
 
 
     names(temp)[names(temp) == 'termdescr'] <- 'order'
+    temp <- temp[temp$term <= term,]
   }
 
   if (comparison == 'cohorts') {

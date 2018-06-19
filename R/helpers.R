@@ -276,3 +276,38 @@ outcomeDisag <- function(outcome,
 
   final
 }
+
+
+################################################################################
+
+#               Asterisc Order Variable from outcomeDisAg
+
+################################################################################
+
+
+activeData <- function(table, term, data, type = 'enroll') {
+
+  if (type == 'enroll') {
+    active <- unique(cohorts[(cohorts$cohortyear %in% table$order |
+                             cohorts$termdescr %in% table$order) &
+                             cohorts$livestatusenroll == 'Live',
+                             c('cohortyear','termdescr')])
+    table$order[table$order %in% active$cohortyear |
+                table$order %in% active$termdescr] <-
+      paste(table$order[table$order %in% active$cohortyear |
+                        table$order %in% active$termdescr], '*', sep = '')
+  }
+
+  if (type == 'comp') {
+    active <- unique(cohorts[(cohorts$cohortyear %in% table$order |
+                                cohorts$termdescr %in% table$order) &
+                               cohorts$livestatuscomp == 'Live',
+                             c('cohortyear','termdescr')])
+    table$order[table$order %in% active$cohortyear |
+                  table$order %in% active$termdescr] <-
+      paste(table$order[table$order %in% active$cohortyear |
+                          table$order %in% active$termdescr], '*', sep = '')
+  }
+
+  table
+}

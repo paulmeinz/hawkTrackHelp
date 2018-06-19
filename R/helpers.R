@@ -287,6 +287,8 @@ outcomeDisag <- function(outcome,
 
 activeData <- function(table, term, data, type = 'enroll') {
 
+  cohorts <- data
+
   if(!is.factor(table$order)) {table$order <- as.factor(table$order)}
 
   if (type == 'enroll') {

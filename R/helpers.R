@@ -289,31 +289,31 @@ activeData <- function(table, term, data, type = 'enroll') {
 
   cohorts <- data
 
+  activeTerms <- unique(cohorts$termdescr[])
+
   if(!is.factor(table$order)) {table$order <- as.factor(table$order)}
 
   if (type == 'enroll') {
-    active <- unique(cohorts[(cohorts$cohortyear %in% levels(table$order) |
-                             cohorts$termdescr %in% levels(table$order)) &
-                             cohorts$livestatusenroll == 'Live' &
-                             cohorts$term == term,
-                             c('cohortyear','termdescr')])
-    levels(table$order)[levels(table$order) %in% active$cohortyear |
-                        levels(table$order) %in% active$termdescr] <-
-      paste(levels(table$order)[levels(table$order) %in% active$cohortyear |
-                                levels(table$order) %in% active$termdescr],
+    activeTerms <- unique(cohorts$termdescr[cohorts$livestatusenroll == 'Live'])
+    activeCohorts <- unique(cohorts$cohortyear[cohorts$livestatusenroll == 'Live'
+                                               & cohorts$term == term])
+    levels(table$order)[levels(table$order) %in% activeTerms |
+                        levels(table$order) %in% activeCohorts] <-
+      paste(levels(table$order)[levels(table$order) %in% activeTerms |
+                                levels(table$order) %in% activeCohorts],
             '*', sep = '')
   }
 
   if (type == 'comp') {
-    active <- unique(cohorts[(cohorts$cohortyear %in% levels(table$order) |
-                             cohorts$termdescr %in% levels(table$order)) &
-                             cohorts$livestatuscomp == 'Live' &
-                             cohorts$term == term,
-                             c('cohortyear','termdescr')])
-    levels(table$order)[levels(table$order) %in% active$cohortyear |
-                        levels(table$order) %in% active$termdescr] <-
-      paste(levels(table$order)[levels(table$order) %in% active$cohortyear |
-                                levels(table$order) %in% active$termdescr],
+    activeTerms <- unique(cohorts$termdescr[cohorts$livestatuscomp == 'Live'])
+    activeCohorts <- unique(cohorts$cohortyear[cohorts$livestatuscomp == 'Live'
+                                               & cohorts$term == term])
+    print(term)
+    print(activeCohorts)
+    levels(table$order)[levels(table$order) %in% activeTerms |
+                        levels(table$order) %in% activeCohorts] <-
+      paste(levels(table$order)[levels(table$order) %in% activeTerms |
+                                levels(table$order) %in% activeCohorts],
             '*', sep = '')
   }
 

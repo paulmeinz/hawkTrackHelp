@@ -316,8 +316,7 @@ activeData <- function(table, term, data, type = 'enroll') {
     activeTerms <- unique(cohorts$termdescr[cohorts$livestatuscomp == 'Live'])
     activeCohorts <- unique(cohorts$cohortyear[cohorts$livestatuscomp == 'Live'
                                                & cohorts$term == term])
-    print(term)
-    print(activeCohorts)
+
     levels(table$order)[levels(table$order) %in% activeTerms |
                         levels(table$order) %in% activeCohorts] <-
       paste(levels(table$order)[levels(table$order) %in% activeTerms |

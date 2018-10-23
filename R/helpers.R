@@ -198,11 +198,15 @@ outcomeDisag <- function(outcome,
                          cohort,
                          definition,
                          term,
+                         filtCol,
+                         filtOpt,
                          equity = 'No',
                          demo = 'None', data, type = '%') {
   temp <- data
   names(temp)[names(temp) == definition] <- 'filt'
-  temp <- temp[!is.na(temp$filt),]
+  names(temp)[names(temp) == filtCol] <- 'filt2'
+  temp <- temp[!is.na(temp$filt) & filt2 == filtOpt,]
+
 
   names(temp)[names(temp) == outcome] <- 'out'
 

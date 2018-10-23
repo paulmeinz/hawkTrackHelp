@@ -207,7 +207,7 @@ outcomeDisag <- function(outcome,
 
   if(filtCol != 'None') {
     names(temp)[names(temp) == filtCol] <- 'filt2'
-    temp <- temp[filt2 == filtOpt,]
+    temp <- temp[temp$filt2 == filtOpt,]
   }
 
   temp <- temp[!is.na(temp$filt),]

@@ -204,9 +204,13 @@ outcomeDisag <- function(outcome,
                          demo = 'None', data, type = '%') {
   temp <- data
   names(temp)[names(temp) == definition] <- 'filt'
-  names(temp)[names(temp) == filtCol] <- 'filt2'
-  temp <- temp[!is.na(temp$filt) & filt2 == filtOpt,]
 
+  if(filtCol != 'None') {
+    names(temp)[names(temp) == filtCol] <- 'filt2'
+    temp <- temp[filt2 == filtOpt,]
+  }
+
+  temp <- temp[!is.na(temp$filt),]
 
   names(temp)[names(temp) == outcome] <- 'out'
 

@@ -205,9 +205,19 @@ outcomeDisag <- function(outcome,
   temp <- data
   names(temp)[names(temp) == definition] <- 'filt'
 
-  if(filtCol != 'None') {
+  if(filtCol != 'None' & filtOpt != 'None') {
     names(temp)[names(temp) == filtCol] <- 'filt2'
-    temp <- temp[temp$filt2 == filtOpt,]
+
+    # check to see if the opts changed
+    if(filtOpt %in% unique(temp$filt2)) {
+      temp <- temp[temp$filt2 == filtOpt,]
+
+    # if they didnt....
+    } else {
+      default <- unique(temp$filt2)[1]
+      temp <- temp[temp$filt2 == default,]
+    }
+
   }
 
   temp <- temp[!is.na(temp$filt),]

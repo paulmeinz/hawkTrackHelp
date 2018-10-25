@@ -206,6 +206,7 @@ outcomeDisag <- function(outcome,
   names(temp)[names(temp) == definition] <- 'filt'
 
   if(filtCol != 'None' & filtOpt != 'None') {
+    preserve <- names(temp)[names(temp) == filtCol]
     names(temp)[names(temp) == filtCol] <- 'filt2'
 
     # check to see if the opts changed
@@ -218,6 +219,7 @@ outcomeDisag <- function(outcome,
       temp <- temp[temp$filt2 == default,]
     }
 
+    names(temp)[names(temp) == 'filt2'] <- preserve
   }
 
   temp <- temp[!is.na(temp$filt),]

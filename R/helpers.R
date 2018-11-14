@@ -133,11 +133,8 @@ makeDemoToolTip <- function(type = 'bar', tool = '%') {
     x + ': ' + '<strong>' + y  + '</strong>' +
     '</p>' +
     '<p>' +
-    'This group constituted ' + e.point.headcount + '%' +
-    '<br/>' +
-    'of the outcome' +
-    '<br/>' +
-    'and ' + e.point.total + '% of all students'
+    e.point.groupp +
+    '% minus the average rate of ' + e.point.overalll + '%'
     '<br/>' +
     'in the cohort.'
     '</p>'
@@ -152,11 +149,10 @@ makeDemoToolTip <- function(type = 'bar', tool = '%') {
     x + ': ' + '<strong>' + y  + '</strong>' +
     '</p>' +
     '<p>' +
-    'The average for this group was ' + e.point.group +
+    e.point.group +
+    ' minus the average of ' + e.point.overall + '%'
     '<br/>' +
-    'compared to an average of ' + e.point.overall +
-    '<br/>' +
-    'for the cohort.'
+    'in the cohort.'
     '</p>'
     } !#"
   }
@@ -285,13 +281,16 @@ outcomeDisag <- function(outcome,
 
     final <- final %>%
       left_join(comp) %>%
-      mutate(group = round(outcome/100, 1),
+      mutate(groupp = round(outcome/100, 3) * 100,
+             overalll = round(outcome2/100, 3) * 100,
+             group = round(outcome/100, 1),
              overall = round(outcome2/100, 1),
-             outcome = round(outcome/outcome2 * 100, 1),
+             outcome = round(outcome - outcome2, 1),
              headcount = round(headcount/headcount2 * 100, 1),
              total = round(total/total2 * 100, 1)) %>%
       select(c('order', 'demo', 'outcome', 'headcount', 'total', 'group',
-               'overall'))
+               'overall', 'groupp','overalll'))
+      print(final)
   }
 
   final

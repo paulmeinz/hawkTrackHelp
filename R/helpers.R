@@ -149,10 +149,10 @@ makeDemoToolTip <- function(type = 'bar', tool = '%') {
     x + ': ' + '<strong>' + y  + '</strong>' +
     '</p>' +
     '<p>' +
-    e.point.group +
-    ' minus the average of ' + e.point.overall + '%'
+    e.point.groupp +
+    ' minus the average of ' + e.point.overalll +
     '<br/>' +
-    'in the cohort.'
+    'for the full cohort.'
     '</p>'
     } !#"
   }
@@ -290,7 +290,6 @@ outcomeDisag <- function(outcome,
              total = round(total/total2 * 100, 1)) %>%
       select(c('order', 'demo', 'outcome', 'headcount', 'total', 'group',
                'overall', 'groupp','overalll'))
-      print(final)
   }
 
   final
